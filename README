@@ -1,0 +1,26 @@
+smtp-callout is a small library to check whether an email address is
+valid.  It does this by contacting the recipient's SMTP server and
+sees whether it rejects the address in question or not.  No actual
+mail is delivered to the address in question.
+
+There are many caveats here: Some MTAs will say they accepts mail to
+all recipients, but then do the "real" check after data has been sent
+(and the MTA checks whether the contents look like spam or the like).
+
+Some MTAs will respond with a "451" code, which means "send the mail
+again later", and this is usually because greylisting is in effect.
+It may or may not have checked whether the recipient exists first.
+Some MTAs respond with a "451" even if they never accept mail for that
+address.
+
+Some MTAs will reject the email if the host you're running this on
+isn't listed in the SPF records for the "MAIL FROM" address.  In that
+case, you can add the host you're running this on to the SPF record
+for that address:
+
+"v=spf1 mx a [...] ip4:172.217.20.46 -all"
+
+The actions this function takes may remind some MTAs of actions
+spammers take, and you may end up in RBLs as a suspected spammer.
+This is very much the case if the address you're checking doesn't
+actually exist.
