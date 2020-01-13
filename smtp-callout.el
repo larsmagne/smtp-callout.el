@@ -76,7 +76,7 @@ mail from."
 	  (signal 'smtp-error (format "Timed out while contacting %s" server)))
 	;; Read the initial greeting from the SMTP server.
 	(smtp-callout--check smtp start timeout debug
-			     "^220" "Iitial greeting: %s")
+			     "^220" "Initial greeting: %s")
 	;; Send a HELO.
 	(setq start (point-max))
 	(process-send-string smtp (format "HELO %s\r\n" helo-host))
@@ -114,8 +114,9 @@ mail from."
 		(process-live-p process))
       (accept-process-output process 0.1 nil t))
     (and found
-	 (replace-regexp-in-string "[\r\n]+" " "
-				   (buffer-substring start (point-max))))))
+	 (string-trim
+	  (replace-regexp-in-string "[\r\n]+" " "
+				    (buffer-substring start (point-max)))))))
 
 (provide 'smtp-callout)
 
