@@ -55,9 +55,12 @@ mail from."
 						 debug)
   (with-temp-buffer
     (let* ((host (cadr (split-string address "@")))
-	   (server (or (cdr (dns-query host 'MX)) host))
 	   (start (point))
 	   line)
+      ;; Resolve CNAME first.
+      (setq host (or (dns-query host 'CNAME) host))
+      ;; The the MTA's name.
+      (setq server (or (cdr (dns-query host 'MX)) host))
       (let ((start-time (float-time))
 	    (smtp (ignore-errors
 		    (make-network-process :buffer (current-buffer)
