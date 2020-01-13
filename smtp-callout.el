@@ -22,6 +22,9 @@
 
 ;;; Commentary:
 
+;; Usage:
+;;
+;; (smtp-callout "foo@example.org" :from-mail "me@my.mta")
 
 ;;; Code:
 

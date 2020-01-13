@@ -24,3 +24,5 @@ The actions this function takes may remind some MTAs of actions
 spammers take, and you may end up in RBLs as a suspected spammer.
 This is very much the case if the address you're checking doesn't
 actually exist.
+
+Don't use this if you aren't aware of the possible consequences.
