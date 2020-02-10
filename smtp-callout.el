@@ -106,7 +106,7 @@ mail from."
 	      (not (string-match check line)))
       (when debug
 	(message "%s" (buffer-string)))
-      (signal 'smtp-error (format message line)))))
+      (signal 'smtp-error (format message (or line "(timed out while talking to server)"))))))
 
 (defun smtp-callout--wait (process start timeout)
   (let ((start-time (float-time))
